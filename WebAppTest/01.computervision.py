@@ -1,8 +1,11 @@
-# DBMUr6vSuend87hwFcwZBg680jylzMpjgsrWpLSuxhW8cx9tIqcpJQQJ99BGACYeBjFXJ3w3AAAFACOGXw7W
 import requests
+from dotenv import load_dotenv
+import os
 
-SUBSCRIPTION_KEY = "DBMUr6vSuend87hwFcwZBg680jylzMpjgsrWpLSuxhW8cx9tIqcpJQQJ99BGACYeBjFXJ3w3AAAFACOGXw7W"
-ENDPOINT = "https://user18-computervision-01.cognitiveservices.azure.com/"
+load_dotenv()
+
+SUBSCRIPTION_KEY=os.getenv("SUBSCRIPTION_KEY")
+ENDPOINT=os.getenv("ENDPOINT")
 
 def analyze_image(image_path):
     ENDPOINT_URL = ENDPOINT + "vision/v3.2/analyze"
@@ -34,7 +37,7 @@ def main():
     result = analyze_image(image_path)
     if result:
         print("Analysis Result:")
-        print(result)
+        print(result["description"]["captions"][0]["text"])
 
 if __name__ == "__main__":
     main()
