@@ -1,0 +1,110 @@
+<svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7ED321;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5BA517;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5A623;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D4881A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#BD10E0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9013FE;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1000" height="600" fill="#f8f9fa"/>
+  
+  <!-- Title -->
+  <text x="500" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">소스코드 분석 시스템 아키텍처</text>
+  
+  <!-- Step 1: 소스코드 폴더 -->
+  <rect x="50" y="80" width="120" height="80" rx="10" fill="url(#blueGrad)" filter="url(#shadow)"/>
+  <text x="110" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">소스코드</text>
+  <text x="110" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">폴더 업로드</text>
+  <text x="110" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">(.py, .java, .js)</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M170 120 L220 120" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2: 파일 수집 -->
+  <rect x="220" y="80" width="120" height="80" rx="10" fill="url(#greenGrad)" filter="url(#shadow)"/>
+  <text x="280" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Python glob</text>
+  <text x="280" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">파일 수집</text>
+  <text x="280" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">recursive=True</text>
+  <text x="280" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">다중 확장자 지원</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M340 120 L390 120" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3: Azure OpenAI -->
+  <rect x="390" y="60" width="140" height="120" rx="10" fill="url(#orangeGrad)" filter="url(#shadow)"/>
+  <text x="460" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Azure OpenAI</text>
+  <text x="460" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">GPT-4 분석</text>
+  <text x="460" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• 비즈니스 로직 분석</text>
+  <text x="460" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• 구조 파악</text>
+  <text x="460" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• 개선점 제시</text>
+  <text x="460" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">• 다이어그램 생성</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M530 120 L580 120" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4: PDF 생성 -->
+  <rect x="580" y="80" width="120" height="80" rx="10" fill="url(#purpleGrad)" filter="url(#shadow)"/>
+  <text x="640" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">FPDF</text>
+  <text x="640" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">PDF 생성</text>
+  <text x="640" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">한글 폰트 지원</text>
+  <text x="640" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">구조화된 리포트</text>
+  
+  <!-- Arrow 4 -->
+  <path d="M700 120 L750 120" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5: Streamlit UI -->
+  <rect x="750" y="80" width="120" height="80" rx="10" fill="url(#blueGrad)" filter="url(#shadow)"/>
+  <text x="810" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Streamlit UI</text>
+  <text x="810" y="120" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">다운로드 제공</text>
+  <text x="810" y="135" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">실시간 진행상황</text>
+  <text x="810" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="white">결과 미리보기</text>
+  
+  <!-- Azure Services Section -->
+  <rect x="50" y="220" width="550" height="140" rx="15" fill="#e8f4f8" stroke="#3498db" stroke-width="2"/>
+  <text x="325" y="245" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2c3e50">기술 스택 구성</text>
+  
+  <!-- Azure OpenAI Service -->
+  <rect x="90" y="270" width="150" height="60" rx="8" fill="#0078d4" filter="url(#shadow)"/>
+  <text x="165" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Azure OpenAI</text>
+  <text x="165" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Service</text>
+  <text x="165" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">GPT-4 Model</text>
+  
+  <!-- Azure App Service -->
+  <rect x="260" y="270" width="150" height="60" rx="8" fill="#0078d4" filter="url(#shadow)"/>
+  <text x="335" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Azure App</text>
+  <text x="335" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Service</text>
+  <text x="335" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">Streamlit Hosting</text>
+  
+  <!-- Azure Blob Storage -->
+  <rect x="430" y="270" width="150" height="60" rx="8" fill="#0078d4" filter="url(#shadow)"/>
+  <text x="505" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Azure Blob</text>
+  <text x="505" y="305" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Storage</text>
+  <text x="505" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="white">파일 저장소</text>
+  
+  <!-- Data Flow Indicators -->
+  <text x="50" y="400" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">데이터 흐름:</text>
+  <text x="50" y="420" font-family="Arial, sans-serif" font-size="12" fill="#34495e">1. 사용자가 소스코드 폴더 경로 입력</text>
+  <text x="50" y="440" font-family="Arial, sans-serif" font-size="12" fill="#34495e">2. Python glob으로 다중 확장자(.py, .java, .js, .ts, .cpp, .c) 파일 수집</text>
+  <text x="50" y="460" font-family="Arial, sans-serif" font-size="12" fill="#34495e">3. Azure OpenAI GPT-4로 코드 구조, 비즈니스 로직, 개선점 분석</text>
+  <text x="50" y="480" font-family="Arial, sans-serif" font-size="12" fill="#34495e">4. FPDF 라이브러리로 한글 지원 PDF 리포트 생성</text>
+  <text x="50" y="500" font-family="Arial, sans-serif" font-size="12" fill="#34495e">5. Streamlit UI에서 실시간 진행상황 표시 및 PDF 다운로드 제공</text>
+</svg>
