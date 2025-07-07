@@ -6,7 +6,7 @@ https://adorable-hail-415.notion.site/Azure-RAG-quickstart-sample-code-214137efe
 
 
 #Script
-az group create --name user18-RG --location "Korea Central"
+az group create --name rg-user18-01 --location "Korea Central"
 az cognitiveservices account create --name user18-computervision-001  --resource-group user18-RG --kind ComputerVision --sku S1 --location eastus
 
 
