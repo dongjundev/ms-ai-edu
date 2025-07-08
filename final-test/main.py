@@ -7,6 +7,8 @@ from fpdf import FPDF
 import tempfile
 import traceback
 from azure.storage.blob import BlobServiceClient
+import zipfile
+import io
 
 # 환경변수 로드
 load_dotenv()
@@ -50,6 +52,7 @@ def ai_analyze_source(files):
                 {"role": "user", "content": prompt}
             ],
         )
+        st.success("분석 완료!")
         return response.choices[0].message.content
     except Exception as e:
         traceback.print_exc()
@@ -67,61 +70,65 @@ def make_pdf(report, filename="분석_리포트.pdf"):
     pdf.output(tmp_file.name)
     return tmp_file.name
 
-def upload_files_to_blob_by_folder(files, folder_path):
+def upload_files_to_blob_by_folder(files, zip_name=None):
     connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
     if not connection_string:
         st.warning("Azure Blob Storage 연결 정보가 없습니다.")
         return
-    # 마지막 폴더명 추출
-    container_name = os.path.basename(os.path.normpath(folder_path)).lower()
+    # zip 파일명(확장자 제외)으로 컨테이너명 생성
+    if zip_name:
+        container_name = os.path.splitext(os.path.basename(zip_name))[0].lower().replace('.', '-').replace('_', '-')
+    elif files and 'path' in files[-1]:
+        container_name = os.path.splitext(os.path.basename(files[-1]['path']))[0].lower()
+    else:
+        container_name = "uploaded-files"
     blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-    # 컨테이너가 없으면 생성
     try:
         blob_service_client.create_container(container_name)
     except Exception:
         pass  # 이미 있으면 무시
     container_client = blob_service_client.get_container_client(container_name)
     for file in files:
-        blob_name = os.path.basename(file['path'])
+        blob_name = file['path']
         container_client.upload_blob(blob_name, file['content'], overwrite=True)
     st.success(f"소스코드가 '{container_name}' 컨테이너에 저장되었습니다.")
 
+
 def main():
     st.title("소스코드 분석 PDF 리포트 생성기")
-    st.write("소스코드 폴더 경로를 입력하면, AI가 분석 후 PDF로 결과를 제공합니다.")
-    
-    st.write(os.getenv("OPENAI_API_KEY"))
-    st.write(os.getenv("AZURE_ENDPOINT"))
-    st.write(os.getenv("OPENAI_API_TYPE"))
-    st.write(os.getenv("OPENAI_API_VERSION"))
-    st.write(os.getenv("DEPLOYMENT_NAME"))
-    
-    folder_path = st.text_input("소스코드 폴더 경로를 입력하세요.", "")
+    st.write("분석할 소스코드 폴더를 zip 파일로 업로드하세요. 폴더 구조가 보존됩니다.")
 
-    if folder_path:
-        with st.spinner("소스코드 읽는 중..."):
-            files = read_source_files(folder_path)
-            st.write(f"총 {len(files)}개의 소스코드 파일을 읽었습니다.")
-            if files:
-                st.write("파일 목록 예시:", [os.path.basename(f['path']) for f in files[:5]])
-                upload_files_to_blob_by_folder(files, folder_path)  # Azure Blob에 업로드
+    uploaded_zip = st.file_uploader("소스코드 폴더(zip) 업로드", type=['zip'])
+    files = []
+    zip_name = None
+    if uploaded_zip is not None:
+        zip_name = uploaded_zip.name
+        with zipfile.ZipFile(io.BytesIO(uploaded_zip.read())) as z:
+            for file_info in z.infolist():
+                if not file_info.is_dir():
+                    with z.open(file_info) as f:
+                        content = f.read().decode('utf-8', errors='ignore')
+                        files.append({'path': file_info.filename, 'content': content})
+        st.write(f"총 {len(files)}개의 파일을 업로드했습니다.")
+        st.write("파일 목록 예시:", [f['path'] for f in files[:5]])
 
-        if st.button("AI로 분석하고 PDF로 저장"):
-            with st.spinner("AI가 소스코드를 분석 중입니다..."):
-                report = ai_analyze_source(files)
-            st.success("분석 완료!")
-
-            with st.spinner("PDF로 저장 중..."):
-                pdf_path = make_pdf(report)
-            with open(pdf_path, "rb") as pdf_file:
-                st.download_button(
-                    label="PDF 리포트 다운로드",
-                    data=pdf_file,
-                    file_name="분석_리포트.pdf",
-                    mime="application/pdf"
-                )
-            st.write("분석 결과:")
-            st.text_area("AI 분석 요약", report, height=400)
+    if files and st.button("Blob Storage에 업로드하고 AI로 분석"):
+        # zip 파일명으로 컨테이너 생성
+        with st.spinner("Blob Storage에 파일 업로드 중..."):
+            upload_files_to_blob_by_folder(files, zip_name)
+        with st.spinner("AI가 소스코드를 분석 중입니다..."):
+            report = ai_analyze_source(files)
+        with st.spinner("PDF로 저장 중..."):
+            pdf_path = make_pdf(report)
+        with open(pdf_path, "rb") as pdf_file:
+            st.download_button(
+                label="PDF 리포트 다운로드",
+                data=pdf_file,
+                file_name="분석_리포트.pdf",
+                mime="application/pdf"
+            )
+        st.write("분석 결과:")
+        st.text_area("AI 분석 요약", report, height=400)
 
 if __name__ == "__main__":
     main()
