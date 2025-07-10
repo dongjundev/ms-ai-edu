@@ -19,7 +19,7 @@ Azure OpenAI Service와 Streamlit을 활용하여 소스코드를 자동으로 �
 [Azure OpenAI GPT-4 분석] → [비즈니스 로직/구조/개선점 요약] → 
 [FPDF 라이브러리로 PDF 생성] → [Streamlit UI에서 다운로드 제공]
 ``` -->
-![alt text](azure_ai_code_analyzer_proposal.svg)
+![alt text](azure_ai_code_analyzer_proposal.png)
 
 ## 🎯 **기대 효과**
 * 코드 문서화 시간 평균 감소 (수동 작성 → AI 자동 생성)
