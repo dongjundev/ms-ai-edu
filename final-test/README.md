@@ -9,7 +9,7 @@ Azure OpenAI Service와 Streamlit을 활용하여 소스코드를 자동으로 �
 * 기술 부채 식별 및 개선점 제시
 
 ## 🔧 **활용 기술 및 Azure 서비스**
-* **Azure OpenAI Service (GPT-4)**: 소스코드 분석, 자연어 기반 구조/로직 요약
+* **Azure OpenAI Service (GPT-4o)**: 소스코드 분석, 자연어 기반 구조/로직 요약
 * **Azure App Service**: Streamlit 웹 애플리케이션 호스팅
 * **Azure Blob Storage**: 소스코드 파일 및 분석 결과 저장
 
