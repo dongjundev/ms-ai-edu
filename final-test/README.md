@@ -26,3 +26,6 @@ Azure OpenAI Service와 Streamlit을 활용하여 소스코드를 자동으로 �
 * 신규 개발자 코드 이해 시간 단축
 * 코드 리뷰 준비 시간 감소
 * 기술 부채 가시화를 통한 리팩토링 우선순위 명확화
+
+---
+webapp-user18-01-ductapgwakcphnfq.koreacentral-01.azurewebsites.net
